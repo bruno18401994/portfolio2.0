@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { ChevronRight } from "lucide-react";
 
 // ─────────────────────────────────────────────────────────────────
 // TOKENS DE DESIGN — edite aqui para mudar paleta/tipografia
@@ -41,6 +42,11 @@ const CSS_BASE = `
     50%       { transform: translateY(-12px); }
   }
   @keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50%       { background-position: 100% 50%; }
+  }
+
+  @keyframes liquid-flow {
     0%, 100% { background-position: 0% 50%; }
     50%       { background-position: 100% 50%; }
   }
@@ -1658,6 +1664,57 @@ function CaseDetail({ caseData, onBack }) {
 }
 
 // ─────────────────────────────────────────────────────────────────
+// COMPONENTE — LiquidButton (CTA com efeito líquido animado)
+// ─────────────────────────────────────────────────────────────────
+
+function LiquidButton({ href, onClick, children }) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <a
+      href={href}
+      onClick={onClick}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        position: "relative",
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "14px 32px",
+        borderRadius: 40,
+        color: "#fff",
+        fontWeight: 600,
+        fontSize: 15,
+        overflow: "hidden",
+        isolation: "isolate",
+        boxShadow: hovered ? `0 8px 40px ${T.crimson}99` : `0 0 30px ${T.crimson}66`,
+        transform: hovered ? "translateY(-2px)" : "translateY(0)",
+        transition: "transform .2s, box-shadow .2s",
+      }}
+    >
+      {/* Camada líquida animada */}
+      <span
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          inset: -2,
+          zIndex: -1,
+          background: `linear-gradient(135deg, ${T.crimson}, ${T.purple}, ${T.magenta}, ${T.crimson})`,
+          backgroundSize: "300% 300%",
+          animation: "liquid-flow 6s ease infinite",
+          filter: hovered ? "saturate(1.2) brightness(1.1)" : "none",
+          transition: "filter .3s",
+        }}
+      />
+      <span style={{ position: "relative", display: "inline-flex", alignItems: "center" }}>
+        {children}
+      </span>
+    </a>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────
 // COMPONENTE — CaseCard (card da listagem na Home)
 // ─────────────────────────────────────────────────────────────────
 
@@ -1731,7 +1788,7 @@ function CaseCard({ c, index, onSelect }) {
             flexShrink:   0,
           }}
         >
-          Ver case completo →
+          Ver case completo <ChevronRight size={15} style={{ display: "inline", verticalAlign: "middle", marginLeft: 2 }} />
         </button>
       </div>
     </FadeIn>
@@ -1912,15 +1969,9 @@ function Home({ onSelectCase, onNavClick }) {
 
           {/* CTAs */}
           <div className="hero-btns">
-            <a
-              href="#cases"
-              onClick={() => onNavClick("cases")}
-              style={{ display: "inline-block", padding: "14px 32px", borderRadius: 40, background: `linear-gradient(135deg,${T.crimson},${T.purple})`, color: "#fff", fontWeight: 600, fontSize: 15, boxShadow: `0 0 30px ${T.crimson}66`, transition: "transform .2s, box-shadow .2s" }}
-              onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = `0 8px 40px ${T.crimson}99`; }}
-              onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)";    e.currentTarget.style.boxShadow = `0 0 30px ${T.crimson}66`; }}
-            >
-              Ver projetos →
-            </a>
+            <LiquidButton href="#cases" onClick={() => onNavClick("cases")}>
+              Ver projetos <ChevronRight size={15} style={{ display: "inline", verticalAlign: "middle", marginLeft: 2 }} />
+            </LiquidButton>
             <a
               href="#contato"
               onClick={() => onNavClick("contato")}
