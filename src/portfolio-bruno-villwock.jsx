@@ -1855,14 +1855,6 @@ function Home({ onSelectCase, onNavClick }) {
         <div className="blob" style={{ width: 300, height: 300, background: `${T.orange}22`, top: "40%", left: "40%", animation: "float 6s ease-in-out infinite" }} />
 
         <div style={{ maxWidth: 900, margin: "0 auto", width: "100%", position: "relative", zIndex: 1 }}>
-          {/* Badge de disponibilidade */}
-          <div style={{ display: "inline-flex", alignItems: "center", gap: 10, marginBottom: "2rem", padding: "8px 18px", borderRadius: 30, background: `${T.orange}1A`, border: `1px solid ${T.orange}40` }}>
-            <span style={{ width: 8, height: 8, borderRadius: "50%", background: T.orange, display: "block", position: "relative", flexShrink: 0 }}>
-              <span style={{ position: "absolute", inset: -2, borderRadius: "50%", border: `1px solid ${T.orange}`, animation: "pulse-ring 2s ease-out infinite" }} />
-            </span>
-            <span style={{ fontSize: 13, color: "rgba(255,255,255,.7)", fontWeight: 500 }}>Disponível para novas oportunidades</span>
-          </div>
-
           {/* Nome */}
           <h1 style={{ fontFamily: "'Manrope',sans-serif", fontSize: "clamp(2.8rem,8vw,6rem)", fontWeight: 800, lineHeight: 1.0, marginBottom: "1rem" }}>
             <span className="text-gradient">Bruno Henrique</span><br />
