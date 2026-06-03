@@ -1767,7 +1767,7 @@ function Home({ onSelectCase, onNavClick }) {
     const handleScroll = () => {
       setScrolled(window.scrollY > 40);
 
-      const scrollPos = window.scrollY + 140;
+      const scrollPos = window.scrollY + 200;
       let current = "";
       SECTIONS.forEach((id) => {
         const el = document.getElementById(id);
