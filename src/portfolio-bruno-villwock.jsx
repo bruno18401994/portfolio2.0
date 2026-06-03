@@ -1819,7 +1819,7 @@ function Home({ onSelectCase, onNavClick }) {
             </a>
           ))}
           <a
-            href="/curriculo-bruno-villwock.pdf"
+            href="/bruno-villwock-curriculo.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="nav-link"
@@ -1862,7 +1862,7 @@ function Home({ onSelectCase, onNavClick }) {
             </a>
           ))}
           <a
-            href="/curriculo-bruno-villwock.pdf"
+            href="/bruno-villwock-curriculo.pdf"
             target="_blank"
             rel="noopener noreferrer"
             style={{
