@@ -1818,6 +1818,23 @@ function Home({ onSelectCase, onNavClick }) {
               {l.label}
             </a>
           ))}
+          <a
+            href="/curriculo-bruno-villwock.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="nav-link"
+            style={{
+              border: "1px solid rgba(242,123,19,0.28)",
+              background: "rgba(242,123,19,0.12)",
+              color: "#F27B13",
+              marginLeft: "0.5rem",
+              textDecoration: "none",
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(242,123,19,0.22)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(242,123,19,0.12)"; }}
+          >
+            Currículo
+          </a>
         </div>
 
         {/* Hamburguer mobile */}
@@ -1844,6 +1861,25 @@ function Home({ onSelectCase, onNavClick }) {
               {l.label}
             </a>
           ))}
+          <a
+            href="/curriculo-bruno-villwock.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: "block",
+              padding: "14px 2rem",
+              borderBottom: "1px solid rgba(255,255,255,.05)",
+              borderLeft: "3px solid #F27B13",
+              background: "rgba(242,123,19,0.05)",
+              fontSize: 15,
+              fontWeight: 600,
+              color: "#F27B13",
+              textDecoration: "none",
+            }}
+            onClick={() => setMenuOpen(false)}
+          >
+            Currículo
+          </a>
         </div>
       )}
 
