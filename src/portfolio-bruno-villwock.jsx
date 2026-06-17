@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { BrowserRouter, Routes, Route, useNavigate, useParams } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
 
 // ─────────────────────────────────────────────────────────────────
@@ -2217,57 +2218,66 @@ function Home({ onSelectCase, onNavClick }) {
 }
 
 // ─────────────────────────────────────────────────────────────────
-// RAIZ — roteador principal Home ↔ CaseDetail
+// COMPONENTE — CasePage
 // ─────────────────────────────────────────────────────────────────
 
-export default function Portfolio() {
-  const [selectedCase,  setSelectedCase]  = useState(null);
-  const [pendingScroll, setPendingScroll] = useState(null);
+function CasePage() {
+  const { caseId } = useParams();
+  const navigate = useNavigate();
+  const caseData = CASES.find((c) => c.id === caseId);
 
-  // Quando saímos de um case e há uma seção pendente, rola até ela
-  useEffect(() => {
-    if (pendingScroll && !selectedCase) {
-      const timeout = setTimeout(() => {
-        const el = document.getElementById(pendingScroll);
-        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-        setPendingScroll(null);
-      }, 120); // aguarda o Home montar
-      return () => clearTimeout(timeout);
-    }
-  }, [pendingScroll, selectedCase]);
+  useEffect(() => { window.scrollTo({ top: 0, behavior: "smooth" }); }, [caseId]);
 
-  const handleSelect = (c) => {
-    setSelectedCase(c);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  if (!caseData) {
+    useEffect(() => { navigate("/", { replace: true }); }, []);
+    return null;
+  }
 
   const handleBack = () => {
-    setSelectedCase(null);
+    navigate("/");
     setTimeout(() => {
       const el = document.getElementById("cases");
       if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 120);
   };
 
-  // Chamado pelo nav de Home E pelo nav de CaseDetail
-  const handleNavClick = (id) => {
-    if (selectedCase) {
-      // Está numa página de case → volta para home e agenda o scroll
-      setPendingScroll(id);
-      setSelectedCase(null);
-    }
-    // Se já está na home, o href="#id" + scroll-padding-top cuida do resto
+  const handleNavClick = (sectionId) => {
+    navigate("/");
+    setTimeout(() => {
+      const el = document.getElementById(sectionId);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 120);
   };
 
-  if (selectedCase) {
-    return (
-      <CaseDetail
-        caseData={selectedCase}
-        onBack={handleBack}
-        onNavClick={handleNavClick}
-      />
-    );
-  }
+  return (
+    <CaseDetail
+      caseData={caseData}
+      onBack={handleBack}
+      onNavClick={handleNavClick}
+    />
+  );
+}
+
+function HomePage() {
+  const navigate = useNavigate();
+
+  const handleSelect = (c) => {
+    navigate(`/cases/${c.id}`);
+  };
+
+  const handleNavClick = (sectionId) => {};
 
   return <Home onSelectCase={handleSelect} onNavClick={handleNavClick} />;
+}
+
+export default function Portfolio() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/cases/:caseId" element={<CasePage />} />
+        <Route path="*" element={<HomePage />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
