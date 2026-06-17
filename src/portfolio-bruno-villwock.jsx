@@ -2228,10 +2228,13 @@ function CasePage() {
 
   useEffect(() => { window.scrollTo({ top: 0, behavior: "smooth" }); }, [caseId]);
 
-  if (!caseData) {
-    useEffect(() => { navigate("/", { replace: true }); }, []);
-    return null;
-  }
+  useEffect(() => {
+    if (!caseData) {
+      navigate("/", { replace: true });
+    }
+  }, [caseData, navigate]);
+
+  if (!caseData) return null;
 
   const handleBack = () => {
     navigate("/");
