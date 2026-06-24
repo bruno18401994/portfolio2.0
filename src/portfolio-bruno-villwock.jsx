@@ -453,7 +453,15 @@ const CASES = [
       "O filtro por tipo de vinho deveria ser priorizado em uma próxima versão",
     ],
     deliveryText: "Após a validação com usuários internos, stakeholders e equipe técnica, o projeto foi aprovado para seguir como MVP. A entrega final contemplou o protótipo interativo de alta fidelidade, o fluxo completo da jornada e a documentação das principais regras de funcionamento.\n\nO handoff foi realizado com o time de desenvolvimento, incluindo alinhamentos sobre navegação, comportamento dos filtros, estados das telas, critérios de recomendação, resolução do totem, legibilidade e objetividade da jornada.",
-    conclusionText: "O Sommelier Digital transformou um processo de escolha complexo em uma experiência guiada, simples e objetiva. A solução traduziu parte do conhecimento de um sommelier em uma jornada acessível, baseada em perguntas essenciais sobre ocasião, harmonização, faixa de preço e preferências.\n\nComo MVP, o projeto cumpriu seu papel de reduzir incertezas, validar o fluxo principal e criar uma base sólida para evoluções futuras.",
+    clientResult: {
+      metric: "35%",
+      metricLabel: "de aumento nas vendas de vinhos",
+      attribution: "Segundo Gabriel Motta, Gerente de Loja do Muffato",
+      quote: "O Muffato trabalha muito forte com a experiência de compra do cliente, e nesse sentido, o sommelier digital vem para agregar. O cliente vem e utiliza ele buscando opções para compra, como países e também harmonizações, com algum produto ou receita.",
+      quoteAuthor: "Gabriel Motta",
+      quoteRole: "Gerente de Loja, Muffato",
+    },
+    conclusionText: "O Sommelier Digital transformou um processo de escolha complexo em uma experiência guiada, simples e objetiva. A solução traduziu parte do conhecimento de um sommelier em uma jornada acessível, baseada em perguntas essenciais sobre ocasião, harmonização, faixa de preço e preferências.\n\nO projeto está em operação na loja física do Muffato e segue evoluindo com base no uso real e em feedbacks da equipe e dos clientes.",
     learnings: [
       "Em experiências assistidas, a qualidade das perguntas é tão importante quanto a interface",
       "Linguagem simples reduz insegurança em temas mais técnicos",
@@ -479,6 +487,7 @@ const CASES = [
       { type: "image", src: "/images/sommelier/rascunhos-prototipo.png", alt: "Rascunhos e exploração de telas no Figma",                         caption: "Exploração e rascunhos no Figma — diferentes direções antes do protótipo final." },
       { type: "image", src: "/images/sommelier/totem-mercado-02.jpg",    alt: "Totem do Sommelier Digital visto pelo ângulo lateral na gôndola",   caption: "Totem em operação — integrado ao ambiente da adega no ponto de venda." },
       { type: "youtube", src: "nfYm4eGQr5Q",              alt: "Demonstração do protótipo interativo do Sommelier Digital",         caption: "Demonstração da jornada completa no protótipo interativo." },
+      { type: "youtube", src: "sDsqSIuCa8Q", vertical: false, alt: "Case de sucesso: Muffato promove experiência com o Sommelier Digital", caption: "Vídeo institucional com depoimento de profissional do cliente sobre o impacto do Sommelier Digital." },
     ],
   },
 
@@ -804,23 +813,36 @@ function MediaItem({ item, large = false }) {
 
   if (item.type === "youtube") {
     const videoId = item.src;
+    const isVertical = item.vertical !== false;
     return (
       <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
-        <iframe
-          src={`https://www.youtube.com/embed/${videoId}`}
-          title={item.alt}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          style={{
-            width:        "100%",
-            maxWidth:     300,
-            height:       520,
-            border:       "1px solid rgba(255,255,255,0.1)",
-            borderRadius: large ? 16 : 12,
-            background:   "#000",
-            display:      "block",
-          }}
-        />
+        {isVertical ? (
+          <iframe
+            src={`https://www.youtube.com/embed/${videoId}`}
+            title={item.alt}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            style={{
+              width: "100%",
+              maxWidth: 300,
+              height: 520,
+              border: "1px solid rgba(255,255,255,0.1)",
+              borderRadius: large ? 16 : 12,
+              background: "#000",
+              display: "block",
+            }}
+          />
+        ) : (
+          <div style={{ position: "relative", width: "100%", paddingBottom: "56.25%", borderRadius: large ? 16 : 12, overflow: "hidden", border: "1px solid rgba(255,255,255,0.1)", background: "#000" }}>
+            <iframe
+              src={`https://www.youtube.com/embed/${videoId}`}
+              title={item.alt}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: "none" }}
+            />
+          </div>
+        )}
       </div>
     );
   }
@@ -1361,6 +1383,33 @@ function CaseDetailSommelier({ c, onBack }) {
             ))}
           </div>
         </FadeIn>
+
+        {c.clientResult && (
+          <FadeIn delay={0.1}>
+            <div style={{ ...glassCard({ background: "rgba(242,123,19,0.06)", borderColor: "rgba(242,123,19,0.25)" }), marginBottom: "1.5rem" }}>
+              <p style={labelStyle}>Resultado</p>
+              <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: "0.5rem" }}>
+                <span style={{ fontFamily: "'Manrope',sans-serif", fontSize: 40, fontWeight: 800, color: "#F27B13", lineHeight: 1 }}>
+                  {c.clientResult.metric}
+                </span>
+                <span style={{ fontSize: 14, color: "rgba(255,255,255,.7)" }}>
+                  {c.clientResult.metricLabel}
+                </span>
+              </div>
+              <p style={{ fontSize: 12, color: "rgba(255,255,255,.4)", marginBottom: "1.25rem" }}>
+                {c.clientResult.attribution}
+              </p>
+              <div style={{ padding: "1rem 1.25rem", background: "rgba(255,255,255,0.03)", borderRadius: 12, borderLeft: "3px solid #F27B13" }}>
+                <p style={{ fontSize: 14, color: "rgba(255,255,255,.82)", fontStyle: "italic", lineHeight: 1.7, margin: "0 0 0.75rem" }}>
+                  "{c.clientResult.quote}"
+                </p>
+                <p style={{ fontSize: 12, color: "rgba(255,255,255,.5)", margin: 0 }}>
+                  {c.clientResult.quoteAuthor} — {c.clientResult.quoteRole}
+                </p>
+              </div>
+            </div>
+          </FadeIn>
+        )}
 
         {c.media[4] && <FadeIn delay={0.1}><div style={{ marginBottom: "2rem" }}><MediaItem item={c.media[4]} large /></div></FadeIn>}
 
