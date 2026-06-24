@@ -195,19 +195,23 @@ const NAV_LINKS = [
 // DADOS — HABILIDADES
 // ─────────────────────────────────────────────────────────────────
 
-const SKILLS = [
-  "Pesquisa com usuários",
-  "UX/UI Design",
-  "Product Design",
-  "Figma",
-  "Prototipação",
-  "Design System",
-  "Testes de usabilidade",
-  "Product Analytics",
-  "PLG",
-  "Colaboração com desenvolvimento",
-  "Documentação de design",
-  "Sistemas B2B complexos",
+const SKILL_CATEGORIES = [
+  {
+    title: "Pesquisa e descoberta",
+    description: "Entrevistas, benchmark e síntese aplicadas em produtos B2B reais.",
+  },
+  {
+    title: "Sistemas complexos",
+    description: "BPM, ECM, fluxos documentais com múltiplas regras de negócio.",
+  },
+  {
+    title: "Prototipação e handoff",
+    description: "Figma, Design System, colaboração direta com desenvolvimento.",
+  },
+  {
+    title: "Pesquisa com usuários",
+    description: "Testes de usabilidade, entrevistas e síntese de descobertas para validar decisões de produto.",
+  },
 ];
 
 
@@ -261,7 +265,7 @@ const CASES = [
   {
     id:       "dashboard",
     template: "dashboard",  // ← define o layout da página de detalhe
-    tag:      "Em desenvolvimento",
+    tag:      "UX/UI Design",
     tagColor: T.orange,
     title:    "Dashboard Smartshare",
     company:  "Selbetti Tecnologia",
@@ -386,7 +390,7 @@ const CASES = [
   {
     id:       "sommelier",
     template: "sommelier",
-    tag:      "MVP",
+    tag:      "UX/UI Design",
     tagColor: T.magenta,
     title:    "Sommelier Digital",
     company:  "Totem Digital",
@@ -1962,7 +1966,7 @@ function Home({ onSelectCase, onNavClick }) {
 
           {/* Descrição principal */}
           <p style={{ fontSize: "clamp(1rem,2vw,1.2rem)", color: "rgba(255,255,255,.82)", lineHeight: 1.65, maxWidth: 600, marginBottom: "1.25rem", fontWeight: 300 }}>
-            Transformo sistemas complexos em experiências digitais mais simples, claras e úteis para usuários e negócios.
+            Projeto experiências para sistemas B2B complexos como BPM, ECM e assinatura digital, onde cada decisão de interface também é uma decisão sobre conformidade, segurança e escala.
           </p>
           <p style={{ fontSize: 14, color: "rgba(255,255,255,.42)", lineHeight: 1.8, maxWidth: 520, marginBottom: "3rem" }}>
             UX/UI Designer com experiência em produtos digitais B2B, sistemas complexos, pesquisa com usuários, prototipação, Design System e colaboração próxima com PMs, desenvolvedores e stakeholders.
@@ -1991,7 +1995,7 @@ function Home({ onSelectCase, onNavClick }) {
         <SectionLabel label="Sobre mim" title="Design, direito e" titleAccent="produto digital" />
         <div className="grid-2col">
           {[
-            "Sou formado em Design e Direito, com especialização em Direito Digital e Compliance. Atualmente atuo como UX/UI Designer Pleno na <strong style='color:#fff'>Selbetti Tecnologia</strong>, onde trabalho há cerca de 4 anos com produtos digitais B2B e sistemas complexos — BPM, ECM, GED, assinatura digital, digitalização/OCR, sistemas de cobrança e soluções corporativas.",
+            "Sou formado em Design e Direito, com especialização em Direito Digital e Compliance. Atualmente atuo como UX/UI Designer Pleno na <strong style='color:#fff'>Selbetti Tecnologia</strong>, onde trabalho há cerca de 4 anos com produtos digitais B2B e sistemas complexos — BPM, ECM, GED, assinatura digital, digitalização/OCR, sistemas de cobrança e soluções corporativas. O conhecimento em Direito me proporciona uma visão mais holística sobre a legalidade e as validações de produto, com atenção a normativas existentes que possam impactar o produto.",
             "Minha trajetória combina visão analítica, entendimento de negócio e foco na experiência do usuário. No dia a dia, colaboro com PMs, desenvolvedores, clientes e stakeholders para entender problemas reais, mapear dores, propor melhorias de usabilidade e transformar descobertas em fluxos, interfaces e protótipos no Figma.",
           ].map((text, i) => (
             <FadeIn key={i} delay={i * 0.1}>
@@ -2006,16 +2010,13 @@ function Home({ onSelectCase, onNavClick }) {
       {/* ── HABILIDADES ───────────────────────────────────────── */}
       <section id="habilidades" className="section-pad" style={{ padding: "6rem 2rem", maxWidth: 900, margin: "0 auto", scrollMarginTop: 88 }}>
         <SectionLabel label="Habilidades" title="O que trago para" titleAccent="cada projeto" />
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
-          {SKILLS.map((s, i) => (
-            <FadeIn key={s} delay={i * 0.03}>
-              <span
-                style={{ display: "inline-block", padding: "9px 18px", borderRadius: 30, border: "1px solid rgba(255,255,255,.11)", background: "rgba(255,255,255,.04)", fontSize: 13, color: "rgba(255,255,255,.75)", backdropFilter: "blur(8px)", cursor: "default", transition: "all .25s" }}
-                onMouseEnter={(e) => { e.currentTarget.style.borderColor = `${T.magenta}88`; e.currentTarget.style.color = "#fff"; e.currentTarget.style.background = `${T.magenta}20`; }}
-                onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,.11)"; e.currentTarget.style.color = "rgba(255,255,255,.75)"; e.currentTarget.style.background = "rgba(255,255,255,.04)"; }}
-              >
-                {s}
-              </span>
+        <div className="grid-2col">
+          {SKILL_CATEGORIES.map((cat, i) => (
+            <FadeIn key={cat.title} delay={i * 0.05}>
+              <div style={{ ...glassCard(), height: "100%" }}>
+                <h3 style={{ fontFamily: "'Manrope',sans-serif", fontSize: 16, fontWeight: 700, color: "#fff", marginBottom: 8 }}>{cat.title}</h3>
+                <p style={{ fontSize: 14, color: T.text, lineHeight: 1.7, margin: 0 }}>{cat.description}</p>
+              </div>
             </FadeIn>
           ))}
         </div>
